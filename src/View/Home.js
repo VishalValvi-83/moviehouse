@@ -6,7 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 let config = {
-    
+
     url: 'https://Movies-Verse.proxy-production.allthingsdev.co/api/movies/most-popular-movies',
     headers: {
         'x-apihub-key': process.env.REACT_APP_API_KEY,
@@ -38,12 +38,13 @@ function Home() {
 
         setTimeout(() => {
             moviesdata()
-        }, 2000);
+        }, 1000);
     }, [])
 
     const handleSearch = (e) => {
-        setSearchTerm(e.target.value)
-        const results = allmovies.filter(movie => movie.title.toLowerCase().includes(e.target.value.toLowerCase()))
+        const value = e.target.value
+        setSearchTerm(value)
+        const results = allmovies.filter(movie => movie.title.toLowerCase().includes(value.toLowerCase()))
         setSearchResults(results)
     }
 

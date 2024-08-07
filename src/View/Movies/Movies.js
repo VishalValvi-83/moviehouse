@@ -30,6 +30,9 @@ function Movies() {
   const [genres, setGenres] = useState([]);
   const [category, setCategory] = useState('');
   const [movies, setMovies] = useState([]);
+  const [allMovies, setAllMovies] = useState([]); // new state for all movies
+  const [searchTerm, setSearchTerm] = useState('')
+  const [searchResults, setSearchResults] = useState([])
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -42,7 +45,29 @@ function Movies() {
         });
     };
 
+    const fetchAllMovies = async () => {
+      const config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://Movies-Verse.proxy-production.allthingsdev.co/api/movies/most-popular-movies',
+        headers: {
+          'x-apihub-key': process.env.REACT_APP_API_KEY,
+          'x-apihub-host': 'Movies-Verse.allthingsdev.co',
+          'x-apihub-endpoint': '611cdfda-546d-4cc9-91ab-bfdac3194613'
+        }
+      };
+      await axios.request(config)
+        .then((response) => {
+          setAllMovies(response.data.movies);
+          setMovies(response.data.movies); // set movies to all movies by default
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
+    };
+
     fetchGenres();
+    fetchAllMovies();
   }, []);
 
   const handleGenreClick = async (genre) => {
@@ -54,15 +79,32 @@ function Movies() {
       toast.error(error.message);
     }
   };
+
+
   useEffect(() => {
     handleGenreClick()
   }, [])
   console.log(category);
   console.log(movies);
 
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value)
+    const results = allMovies.filter(movie => movie.title.toLowerCase().includes(e.target.value.toLowerCase()))
+    setSearchResults(results)
+  }
   return (
     <>
       <Navbar />
+      <div className="home-banner">
+        <div className="banner-content">
+          <h1 className="site-title">MovieHouse</h1>
+          <p>Discover the latest movies and TV shows</p>
+          <div className="search">
+            <input type="text" className="search-input" placeholder="Search for movies or TV shows" value={searchTerm} onChange={handleSearch} />
+            <button type="submit" className="search-btn">Search</button>
+          </div>
+        </div>
+      </div>
       <div className='genres-container mt-12'>
         <h3>Genres:</h3>
         <div className="genres flex justify-center flex-wrap space-x-2 space-y-2 ">
@@ -72,19 +114,40 @@ function Movies() {
         </div>
       </div>
 
-      <div>
-        <h3>Movies in {category} genre:</h3>
-        <ul>
-          {movies.map((movie, i) => {
-            const { title, image, } = movie
-            return (
-              <>
+      {searchTerm ? (
+        <div className="new-release-container">
+          <h3 className="heading">Search Results</h3>
+          <div className="home-card-container">
+            {
+              searchResults.map((movie, index) => {
+                const { title, image, } = movie
+                return (
+                  <>
+                    <MoviesCards key={index} title={title} image={image} />
+                  </>
+                )
+              })
+            }
+          </div>
+        </div>
+      ) : (
+        <div>
+          {category ? (
+            <h3>Movies in {category} genre:</h3>
+          ) : (
+            <h3>All Movies:</h3>
+          )}
+          <div className='flex justify-center flex-wrap space-x-2 space-y-2 '>
+            {(category ? movies : allMovies).map((movie, i) => {
+              const { title, image, } = movie
+              return (
                 <MoviesCards key={i} title={title} image={image} />
-              </>
-            )
-          })}
-        </ul>
-      </div>
+              )
+            })}
+          </div>
+        </div>
+      )
+      }
 
     </>
   );

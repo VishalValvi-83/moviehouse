@@ -1,0 +1,32 @@
+.navbar {
+    margin: 0;
+    /* background-color:; */
+    background: transparent;
+    position: fixed;
+    top: 0;
+}
+
+nav {
+    display: flex;
+    padding: 0 15px;
+    gap: 30px;
+    align-items: center;
+}
+
+.navbar nav a {
+    padding: 10px;
+    display: flex;
+    color: #ffffff;
+    text-decoration: none;
+    vertical-align: baseline;
+}
+
+.navbar nav a img {
+    vertical-align: middle;
+}
+
+.active {
+    border-bottom: 1px solid goldenrod;
+    color: white;
+
+}

@@ -45,12 +45,13 @@ function Navbar() {
           <a href='/' className="btn btn-ghost text-xl">MoviesHouse</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+          <ul className="menu menu-horizontal gap-3 px-1">
             <NavLink className={`lg:flex ${`lg:flex ${(e) => { return e.isActive ? "active mx-2" : "mx-2" }}`}`} to="/" >
               <img src={HomeIcon} alt='' />Home</NavLink>
-            <NavLink className={`lg:flex w-22 ${(e) => { return e.isActive ? "active mx-2" : "mx-2" }}`} to="/movies"><img src={MoviesIcon} alt='' /> Movies</NavLink>
-            <NavLink className={`lg:flex ${(e) => { return e.isActive ? "active mx-2" : "mx-2" }}`} to="/series"><img src={SeriesIcon} alt='' />Series</NavLink>
-            <NavLink className={`lg:flex ${(e) => { return e.isActive ? "active mx-3" : "mx-3" }}`} to="/tv-shows"><img src={TvIcon} alt='' />TV Shows</NavLink>
+            <NavLink className={`lg:flex ${(e) => { return e.isActive ? "active mx-2" : "mx-2" }}`} to="/movies"><img src={MoviesIcon} alt='' /> Movies</NavLink>
+
+            <NavLink className={`lg:flex ${(e) => { return e.isActive ? "active mx-2" : "mx-3" }}`} to="/series"><img src={SeriesIcon} alt='' />Series</NavLink>
+            <NavLink className={`lg:flex w-28 ${(e) => { return e.isActive ? "active mx-3" : "mx-3" }}`} to="/tv-shows"><img src={TvIcon} alt='' />TV Shows</NavLink>
           </ul>
         </div>
         <div className="navbar-end">

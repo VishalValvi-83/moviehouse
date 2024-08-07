@@ -1,13 +1,13 @@
 import React from 'react'
 import './MovieCard.css'
-function MoviesCards() {
+function MoviesCards({title, image}) {
     return (
         <div className='movie-card'>
             <div className='card-img-container'>
-                <img src='https://movies4u.tax/wp-content/uploads/2024/07/despicable-me-4.webp' alt='' />
+                <img src={image} alt='' />
                 <div className='view-btn'>View</div>
             </div>
-            <h3 className='movie-title'>Despicable Me 4 (2024)</h3>
+            <h3 className='movie-title'>{title}</h3>
         </div>
     )
 }

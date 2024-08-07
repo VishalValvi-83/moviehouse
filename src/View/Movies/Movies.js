@@ -30,7 +30,7 @@ function Movies() {
   const [genres, setGenres] = useState([]);
   const [category, setCategory] = useState('');
   const [movies, setMovies] = useState([]);
-  const [allMovies, setAllMovies] = useState([]); // new state for all movies
+  const [allMovies, setAllMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([])
 
@@ -59,7 +59,7 @@ function Movies() {
       await axios.request(config)
         .then((response) => {
           setAllMovies(response.data.movies);
-          setMovies(response.data.movies); // set movies to all movies by default
+          setMovies(response.data.movies);
         })
         .catch((error) => {
           toast.error(error.message);
@@ -84,8 +84,7 @@ function Movies() {
   useEffect(() => {
     handleGenreClick()
   }, [])
-  console.log(category);
-  console.log(movies);
+
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value)
@@ -105,19 +104,19 @@ function Movies() {
           </div>
         </div>
       </div>
-      <div className='genres-container mt-12'>
-        <h3>Genres:</h3>
+      <div className='genres-container md:w-4/5	mx-auto mt-12 mb-5'>
+        <h3 className='heading text-center'>By Genres </h3>
         <div className="genres flex justify-center flex-wrap space-x-2 space-y-2 ">
           {genres.map((genre, i) => (
-            <button className='btn w-32' value={genre} onClick={() => handleGenreClick(genre)} key={i}>{genre}</button>
+            <button className='btn sm:w-22 md:w-32' value={genre} onClick={() => handleGenreClick(genre)} key={i}>{genre}</button>
           ))}
         </div>
       </div>
 
       {searchTerm ? (
-        <div className="new-release-container">
+        <div className="new-release-container ">
           <h3 className="heading">Search Results</h3>
-          <div className="home-card-container">
+          <div className="home-card-container ">
             {
               searchResults.map((movie, index) => {
                 const { title, image, } = movie
@@ -131,13 +130,13 @@ function Movies() {
           </div>
         </div>
       ) : (
-        <div>
+        <div className='container mx-auto'>
           {category ? (
-            <h3>Movies in {category} genre:</h3>
+                    <h3 className='heading text-center'>Movies In {category} Genre </h3>
           ) : (
-            <h3>All Movies:</h3>
+            <h3 className='heading text-center'>All Movies</h3>
           )}
-          <div className='flex justify-center flex-wrap space-x-2 space-y-2 '>
+          <div className='flex justify-center grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 space-y-2 '  >
             {(category ? movies : allMovies).map((movie, i) => {
               const { title, image, } = movie
               return (

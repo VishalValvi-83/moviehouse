@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import './Navbar.css'
 import HomeIcon from './Assets/home.svg'
 import MoviesIcon from './Assets/movies.svg'
@@ -65,7 +65,7 @@ function Navbar() {
           </ul>
         </div>
         <div className="navbar-end">
-          <Link to='/' className="btn">Button</Link>
+          {/* <Link to='/' className="btn">Button</Link> */}
         </div>
       </div>
     </div>

@@ -34,7 +34,7 @@ const router = createBrowserRouter([
 
 root.render(
   <>
-  <RouterProvider router={router} />
-  <Toaster/>
+    <RouterProvider router={router} />
+    <Toaster />
   </>
 );

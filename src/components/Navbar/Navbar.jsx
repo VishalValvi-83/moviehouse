@@ -1,5 +1,5 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import './Navbar.css'
 import HomeIcon from './Assets/home.svg'
 import MoviesIcon from './Assets/movies.svg'
@@ -8,8 +8,18 @@ import TvIcon from './Assets/tv.svg'
 
 
 function Navbar() {
+  useEffect(() => {
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 0) {
+        navbar.classList.add('scrollNavBg');
+      } else {
+        navbar.classList.remove('scrollNavBg');
+      }
+    });
+  }, []);
   return (
-    <div className='navbar'>
+    <div id='navbar' className='navbar'>
       {/* <nav>
         <NavLink className={(e) => { return e.isActive ? "active" : "" }} to="/" ><img src={HomeIcon} alt='' />Home</NavLink>
         <NavLink className={(e) => { return e.isActive ? "active" : "" }} to="/movies"><img src={MoviesIcon} alt='' /> Movies</NavLink>
@@ -55,7 +65,7 @@ function Navbar() {
           </ul>
         </div>
         <div className="navbar-end">
-          <a href='/' className="btn">Button</a>
+          <Link to='/' className="btn">Button</Link>
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import MoviesCards from "../components/MovieCards/MoviesCards";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Banner from "../components/Banner/Banner";
+import Footer from "../components/Footer/Footer";
 
 let config = {
     method: 'get',
@@ -102,6 +103,7 @@ function Home() {
                     </div>
                 </>
             )}
+            <Footer/>
         </>
     )
 }

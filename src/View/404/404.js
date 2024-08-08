@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from './../../components/Navbar/Navbar.jsx'
+import Footer from '../../components/Footer/Footer.js'
 function Error() {
     return (
         <>
@@ -17,6 +18,7 @@ function Error() {
                     </div>
                 </div>
             </main>
+            <Footer/>
         </>
     )
 }

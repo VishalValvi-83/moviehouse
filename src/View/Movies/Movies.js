@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import MoviesCards from './../../components/MovieCards/MoviesCards'
 import Banner from '../../components/Banner/Banner';
 import ReactPaginate from 'react-paginate';
+import Footer from '../../components/Footer/Footer';
 
 const genresConfig = {
   method: 'get',
@@ -180,6 +181,7 @@ function Movies() {
         </div>
       )
       }
+      <Footer/>
     </>
   );
 }

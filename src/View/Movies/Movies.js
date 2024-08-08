@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import MoviesCards from './../../components/MovieCards/MoviesCards'
+import Banner from '../../components/Banner/Banner';
 
 const genresConfig = {
   method: 'get',
@@ -94,16 +95,7 @@ function Movies() {
   return (
     <>
       <Navbar />
-      <div className="home-banner">
-        <div className="banner-content">
-          <h1 className="site-title">MovieHouse</h1>
-          <p>Discover the latest movies and TV shows</p>
-          <div className="search">
-            <input type="text" className="search-input" placeholder="Search for movies or TV shows" value={searchTerm} onChange={handleSearch} />
-            <button type="submit" className="search-btn">Search</button>
-          </div>
-        </div>
-      </div>
+      <Banner handleSearch={handleSearch} searchTerm={searchTerm}/>
       <div className='genres-container md:w-4/5	mx-auto mt-12 mb-5'>
         <h3 className='heading text-center'>By Genres </h3>
         <div className="genres flex justify-center flex-wrap space-x-2 space-y-2 ">

@@ -11,7 +11,7 @@ function Navbar() {
   useEffect(() => {
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 0) {
+      if (window.scrollY > 200) {
         navbar.classList.add('scrollNavBg');
       } else {
         navbar.classList.remove('scrollNavBg');

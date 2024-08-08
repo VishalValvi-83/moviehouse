@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar/Navbar";
 import MoviesCards from "../components/MovieCards/MoviesCards";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Banner from "../components/Banner/Banner";
 
 let config = {
 
@@ -51,16 +52,7 @@ function Home() {
     return (
         <>
             <Navbar />
-            <div className="home-banner">
-                <div className="banner-content">
-                    <h1 className="site-title">MovieHouse</h1>
-                    <p>Discover the latest movies and TV shows</p>
-                    <div className="search">
-                        <input type="text" className="search-input" placeholder="Search for movies or TV shows" value={searchTerm} onChange={handleSearch} />
-                        <button type="submit" className="search-btn">Search</button>
-                    </div>
-                </div>
-            </div>
+            <Banner handleSearch={handleSearch} searchTerm={searchTerm}/>
             {searchTerm ? (
                 <div className="new-release-container">
                     <h3 className="heading">Search Results</h3>

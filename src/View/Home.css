@@ -50,15 +50,15 @@
 .search-btn {
     padding: 12px 20px;
     margin-left: 10px;
-    background-color: #3b3b3b;
-    color: white;
+    background-color: #ffc800;
+    color: black;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
 
     &:hover {
-        background-color: darkgoldenrod;
+        background-color: rgb(241, 199, 93);
     }
 }
 

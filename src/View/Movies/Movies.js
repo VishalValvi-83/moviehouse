@@ -11,7 +11,7 @@ const genresConfig = {
   maxBodyLength: Infinity,
   url: 'https://Movies-Verse.proxy-production.allthingsdev.co/api/movies/available-genres',
   headers: {
-    'x-apihub-key': process.env.REACT_APP_API_KEY,
+    'x-apihub-key': '',
     'x-apihub-host': 'Movies-Verse.allthingsdev.co',
     'x-apihub-endpoint': '462dfdab-8876-412d-af11-765956a494a4'
   }
@@ -22,7 +22,7 @@ const moviesConfig = (genre) => ({
   maxBodyLength: Infinity,
   url: `https://Movies-Verse.proxy-production.allthingsdev.co/api/movies/get-by-genre?genre=${genre}`,
   headers: {
-    'x-apihub-key': process.env.REACT_APP_API_KEY,
+    'x-apihub-key': '',
     'x-apihub-host': 'Movies-Verse.allthingsdev.co',
     'x-apihub-endpoint': 'dae9e3d3-6b6c-4fde-b298-ada2806ae563'
   }
@@ -59,7 +59,7 @@ function Movies() {
           setGenres(response.data.genres);
         })
         .catch((error) => {
-          toast.error(error.message);
+          toast.error("Failed to fetch genre");
         });
     };
 
@@ -69,7 +69,7 @@ function Movies() {
         maxBodyLength: Infinity,
         url: 'https://Movies-Verse.proxy-production.allthingsdev.co/api/movies/most-popular-movies',
         headers: {
-          'x-apihub-key': process.env.REACT_APP_API_KEY,
+          'x-apihub-key': '',
           'x-apihub-host': 'Movies-Verse.allthingsdev.co',
           'x-apihub-endpoint': '611cdfda-546d-4cc9-91ab-bfdac3194613'
         }
@@ -81,7 +81,7 @@ function Movies() {
         })
         .catch((error) => {
           console.error(error);
-          toast.error("Failed to Load");
+          toast.error("Failed to Load Movies");
         });
     };
 
@@ -96,7 +96,7 @@ function Movies() {
       setMovies(response.data.movies);
     } catch (error) {
       console.error(error);
-      toast.error("Failed to Load");
+      toast.error("Failed to Load genre");
     }
   };
 
@@ -147,32 +147,36 @@ function Movies() {
           ) : (
             <h3 className='heading text-center'>All Movies</h3>
           )}
-          <div className='flex justify-center grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 space-y-2 '  >
-            {currentMovies.map((movie, i) => {
-              const { title, image, } = movie
-              return (
-                <MoviesCards key={i} title={title} image={image} />
-              )
-            })}
-          </div>
+
+          {currentMovies.length > 0 ? (
+            <div className='flex justify-center grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 '  >
+              {currentMovies.map((movie, i) => {
+                const { title, image, } = movie
+                return (
+                  <MoviesCards key={i} title={title} image={image} />
+                )
+              })} </div>) :
+            (<p>No movies found</p>)
+          }
+
           <div className="my-5 py-5">
-        <ReactPaginate
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
-          breakLabel={"..."}
-          breakClassName={"break-me"}
-          pageCount={pageCount}
-          marginPagesDisplayed={3}
-          pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
-          activeClassName={"active border text-dark search-btn p-1"}
-          containerClassName={"pagination gap-2 flex flex-row flex-wrap justify-center"}
-          previousClassName={"search-btn py-1 px-2"}
-          nextClassName={"search-btn py-1 px-2"}
-          pageClassName={""}
-          pageLinkClassName={"p-2 border-yellow"}
-        />
-      </div>
+            <ReactPaginate
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={pageCount}
+              marginPagesDisplayed={3}
+              pageRangeDisplayed={5}
+              onPageChange={handlePageClick}
+              activeClassName={"active border text-dark search-btn p-1"}
+              containerClassName={"pagination gap-2 flex flex-row flex-wrap justify-center"}
+              previousClassName={"search-btn py-1 px-2"}
+              nextClassName={"search-btn py-1 px-2"}
+              pageClassName={""}
+              pageLinkClassName={"p-2 border-yellow"}
+            />
+          </div>
         </div>
       )
       }

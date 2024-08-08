@@ -7,10 +7,11 @@ import toast from "react-hot-toast";
 import Banner from "../components/Banner/Banner";
 
 let config = {
-
+    method: 'get',
+    maxBodyLength: Infinity,
     url: 'https://Movies-Verse.proxy-production.allthingsdev.co/api/movies/most-popular-movies',
     headers: {
-        'x-apihub-key': process.env.REACT_APP_API_KEY,
+        'x-apihub-key': '',
         'x-apihub-host': 'Movies-Verse.allthingsdev.co',
         'x-apihub-endpoint': '611cdfda-546d-4cc9-91ab-bfdac3194613'
     }
@@ -30,7 +31,7 @@ function Home() {
                 setAllMovies(response.data.movies);
                 console.log(JSON.stringify(response.data.movies));
             } catch (error) {
-                console.error(error);
+                console.error(error.response.data.message);
                 toast.error("Error loading movies");
             }
             toast.dismiss()

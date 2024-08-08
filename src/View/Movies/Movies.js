@@ -4,6 +4,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import MoviesCards from './../../components/MovieCards/MoviesCards'
 import Banner from '../../components/Banner/Banner';
+import ReactPaginate from 'react-paginate';
 
 const genresConfig = {
   method: 'get',
@@ -34,6 +35,22 @@ function Movies() {
   const [allMovies, setAllMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([])
+  const [currentPage, setCurrentPage] = useState(10);
+  const moviesPerPage = 10;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, category]);
+  const indexOfLastMovie = currentPage * moviesPerPage;
+  const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
+  const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
+
+  const pageCount = Math.ceil(movies.length / moviesPerPage);
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected + 1);
+  };
+
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -63,7 +80,8 @@ function Movies() {
           setMovies(response.data.movies);
         })
         .catch((error) => {
-          toast.error(error.message);
+          console.error(error);
+          toast.error("Failed to Load");
         });
     };
 
@@ -77,7 +95,8 @@ function Movies() {
       const response = await axios.request(moviesConfig(genre));
       setMovies(response.data.movies);
     } catch (error) {
-      toast.error(error.message);
+      console.error(error);
+      toast.error("Failed to Load");
     }
   };
 
@@ -95,7 +114,7 @@ function Movies() {
   return (
     <>
       <Navbar />
-      <Banner handleSearch={handleSearch} searchTerm={searchTerm}/>
+      <Banner handleSearch={handleSearch} searchTerm={searchTerm} />
       <div className='genres-container md:w-4/5	mx-auto mt-12 mb-5'>
         <h3 className='heading text-center'>By Genres </h3>
         <div className="genres flex justify-center flex-wrap space-x-2 space-y-2 ">
@@ -124,22 +143,39 @@ function Movies() {
       ) : (
         <div className='container mx-auto'>
           {category ? (
-                    <h3 className='heading text-center'>Movies In {category} Genre </h3>
+            <h3 className='heading text-center'>Movies In {category} Genre </h3>
           ) : (
             <h3 className='heading text-center'>All Movies</h3>
           )}
           <div className='flex justify-center grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 space-y-2 '  >
-            {(category ? movies : allMovies).map((movie, i) => {
+            {currentMovies.map((movie, i) => {
               const { title, image, } = movie
               return (
                 <MoviesCards key={i} title={title} image={image} />
               )
             })}
           </div>
+          <div className="my-5 py-5">
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={pageCount}
+          marginPagesDisplayed={3}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          activeClassName={"active border text-dark search-btn p-1"}
+          containerClassName={"pagination gap-2 flex flex-row flex-wrap justify-center"}
+          previousClassName={"search-btn py-1 px-2"}
+          nextClassName={"search-btn py-1 px-2"}
+          pageClassName={""}
+          pageLinkClassName={"p-2 border-yellow"}
+        />
+      </div>
         </div>
       )
       }
-
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
 import './Home.css'
 import Navbar from "../components/Navbar/Navbar";
 import MoviesCards from "../components/MovieCards/MoviesCards";
@@ -17,23 +17,27 @@ let config = {
 };
 
 function Home() {
-    const [allmovies, setAllMovies] = useState([])
-    const [searchTerm, setSearchTerm] = useState('')
-    const [searchResults, setSearchResults] = useState([])
+    const [allmovies, setAllMovies] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5);
+
 
     useEffect(() => {
         const moviesdata = async () => {
             toast.loading("Loading")
 
-            try {
-                const response = await axios.request(config);
-                setAllMovies(response.data.movies);
-                console.log(JSON.stringify(response.data.movies));
-            } catch (error) {
-                console.error(error);
-                toast.error("Error loading movies");
-            }
+            await axios.request(config)
+                .then((response) => {
+                    setAllMovies(response.data.movies)
+                    console.log(JSON.stringify(response.data.movies));
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             toast.dismiss()
+
         }
 
         setTimeout(() => {
@@ -48,6 +52,14 @@ function Home() {
         setSearchResults(results)
     }
 
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = allmovies.slice(indexOfFirstItem, indexOfLastItem);
+
     return (
         <>
             <Navbar />
@@ -56,14 +68,15 @@ function Home() {
                 <div className="new-release-container">
                     <h3 className="heading">Search Results</h3>
                     <div className="home-card-container">
-                        {searchResults.length > 0 ? (
+                        {
                             searchResults.map((movie, index) => {
                                 const { title, image, } = movie
                                 return (
                                     <>
                                         <MoviesCards key={index} title={title} image={image} />
-                                    </>)
-                            })) : (<h3>No results found</h3>)
+                                    </>
+                                )
+                            })
                         }
                     </div>
                 </div>
@@ -73,7 +86,7 @@ function Home() {
                         <h3 className="heading">Trending Movies</h3>
                         <div className="home-card-container">
                             {
-                                allmovies.slice(0, 5).map((movie, index) => {
+                                currentItems.map((movie, index) => {
                                     const { title, image, } = movie
                                     return (
                                         <>
@@ -84,24 +97,14 @@ function Home() {
                             }
                         </div>
                     </div>
-                    <div className="new-release-container">
-                        <h3 className="heading">Popular Movies</h3>
-                        <div className="home-card-container">
-                            {
-                                allmovies.slice(5, 10).map((movie, index) => {
-                                    const { title, image, } = movie
-                                    return (
-                                        <>
-                                            <MoviesCards key={index} title={title} image={image} />
-                                        </>
-                                    )
-                                })
-                            }
-                        </div>
+                    <div className="pagination-container">
+                        <button onClick={() => handlePageChange(currentPage - 1)}>Prev</button>
+                        <span>Page {currentPage} of {Math.ceil(allmovies.length / itemsPerPage)}</span>
+                        <button onClick={() => handlePageChange(currentPage + 1)}>Next</button>
                     </div>
                 </>
             )}
         </>
     )
 }
-export default Home
+export default Home;

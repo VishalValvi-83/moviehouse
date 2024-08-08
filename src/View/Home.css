@@ -48,17 +48,14 @@
 }
 
 .search-btn {
-    padding: 12px 20px;
-    margin-left: 10px;
     background-color: #ffc800;
     color: black;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
-
     &:hover {
-        background-color: rgb(241, 199, 93);
+        background-color: rgb(196, 148, 29);
     }
 }
 

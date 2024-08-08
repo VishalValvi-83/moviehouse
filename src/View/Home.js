@@ -12,9 +12,9 @@ let config = {
     maxBodyLength: Infinity,
     url: 'https://Movies-Verse.proxy-production.allthingsdev.co/api/movies/most-popular-movies',
     headers: {
-        'x-apihub-key': '',
+        'x-apihub-key': process.env.REACT_APP_API_KEY,
         'x-apihub-host': 'Movies-Verse.allthingsdev.co',
-        'x-apihub-endpoint': '611cdfda-546d-4cc9-91ab-bfdac3194613'
+        'x-apihub-endpoint': '611cdfda-546d-4cc9-91ab-bfdac3194613 '
     }
 };
 

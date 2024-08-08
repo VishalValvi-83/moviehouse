@@ -12,7 +12,7 @@ const genresConfig = {
   maxBodyLength: Infinity,
   url: 'https://Movies-Verse.proxy-production.allthingsdev.co/api/movies/available-genres',
   headers: {
-    'x-apihub-key': '',
+    'x-apihub-key': process.env.REACT_APP_API_KEY,
     'x-apihub-host': 'Movies-Verse.allthingsdev.co',
     'x-apihub-endpoint': '462dfdab-8876-412d-af11-765956a494a4'
   }
@@ -23,7 +23,7 @@ const moviesConfig = (genre) => ({
   maxBodyLength: Infinity,
   url: `https://Movies-Verse.proxy-production.allthingsdev.co/api/movies/get-by-genre?genre=${genre}`,
   headers: {
-    'x-apihub-key': '',
+    'x-apihub-key': process.env.REACT_APP_API_KEY,
     'x-apihub-host': 'Movies-Verse.allthingsdev.co',
     'x-apihub-endpoint': 'dae9e3d3-6b6c-4fde-b298-ada2806ae563'
   }
@@ -70,7 +70,7 @@ function Movies() {
         maxBodyLength: Infinity,
         url: 'https://Movies-Verse.proxy-production.allthingsdev.co/api/movies/most-popular-movies',
         headers: {
-          'x-apihub-key': '',
+          'x-apihub-key': process.env.REACT_APP_API_KEY,
           'x-apihub-host': 'Movies-Verse.allthingsdev.co',
           'x-apihub-endpoint': '611cdfda-546d-4cc9-91ab-bfdac3194613'
         }

@@ -150,13 +150,13 @@ function Movies() {
           </div>
         </div>
       ) : (
-        <div className='container mx-auto'>
+        <div className='container lg:w-11/12 mx-auto'>
           {category ?
             (<h3 className='heading text-center'>Movies In {category} Genre </h3>)
             :
             (<h3 className='heading text-center'>All Movies</h3>)
           }
-          <div className='flex justify-center grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 '  >
+          <div className='flex container mx-auto justify-center grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 ' >
             {currentMovies.map((movie, i) => {
               const { title, image, } = movie
               return (
@@ -169,8 +169,6 @@ function Movies() {
               )
             })}
           </div>
-
-
 
           <div className="my-5 py-5">
             <ReactPaginate

@@ -33,7 +33,7 @@ function Home() {
                 const response = await axios.request(config);
                 setAllMovies(response.data.movies);
             } catch (error) {
-                console.error(error.response.data.message);
+                console.error(error);
                 toast.error("Error loading movies");
             }
             setTimeout(() => {

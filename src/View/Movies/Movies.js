@@ -6,6 +6,7 @@ import MoviesCards from './../../components/MovieCards/MoviesCards'
 import Banner from '../../components/Banner/Banner';
 import ReactPaginate from 'react-paginate';
 import Footer from '../../components/Footer/Footer';
+import Skeleton from '../../components/Skeleton/Skeleton';
 
 const genresConfig = {
   method: 'get',
@@ -38,6 +39,13 @@ function Movies() {
   const [searchResults, setSearchResults] = useState([])
   const [currentPage, setCurrentPage] = useState(10);
   const moviesPerPage = 10;
+  const [loadSkeleton, setLoadSkeleton] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoadSkeleton(false);
+    }, 2000);
+  }, []);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -51,7 +59,6 @@ function Movies() {
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected + 1);
   };
-
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -88,6 +95,7 @@ function Movies() {
 
     fetchGenres();
     fetchAllMovies();
+
   }, []);
 
   const handleGenreClick = async (genre) => {
@@ -143,22 +151,26 @@ function Movies() {
         </div>
       ) : (
         <div className='container mx-auto'>
-          {category ? (
-            <h3 className='heading text-center'>Movies In {category} Genre </h3>
-          ) : (
-            <h3 className='heading text-center'>All Movies</h3>
-          )}
-
-          {currentMovies.length > 0 ? (
-            <div className='flex justify-center grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 '  >
-              {currentMovies.map((movie, i) => {
-                const { title, image, } = movie
-                return (
-                  <MoviesCards key={i} title={title} image={image} />
-                )
-              })} </div>) :
-            (<p>No movies found</p>)
+          {category ?
+            (<h3 className='heading text-center'>Movies In {category} Genre </h3>)
+            :
+            (<h3 className='heading text-center'>All Movies</h3>)
           }
+          <div className='flex justify-center grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 '  >
+            {currentMovies.map((movie, i) => {
+              const { title, image, } = movie
+              return (
+                <>{!loadSkeleton ?
+                  <MoviesCards key={i} title={title} image={image} />
+                  :
+                  <Skeleton key={i} />
+                }
+                </>
+              )
+            })}
+          </div>
+
+
 
           <div className="my-5 py-5">
             <ReactPaginate
@@ -181,7 +193,7 @@ function Movies() {
         </div>
       )
       }
-      <Footer/>
+      <Footer />
     </>
   );
 }

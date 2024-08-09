@@ -6,6 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Banner from "../components/Banner/Banner";
 import Footer from "../components/Footer/Footer";
+import Skeleton from "../components/Skeleton/Skeleton";
 
 let config = {
     method: 'get',
@@ -22,6 +23,7 @@ function Home() {
     const [allmovies, setAllMovies] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResults, setSearchResults] = useState([])
+    const [loadSkeleton, setLoadSkeleton] = useState(true)
 
     useEffect(() => {
         const moviesdata = async () => {
@@ -30,17 +32,16 @@ function Home() {
             try {
                 const response = await axios.request(config);
                 setAllMovies(response.data.movies);
-                console.log(JSON.stringify(response.data.movies));
             } catch (error) {
                 console.error(error.response.data.message);
                 toast.error("Error loading movies");
             }
-            toast.dismiss()
+            setTimeout(() => {
+                toast.dismiss()
+            }, 1000);
         }
 
-        setTimeout(() => {
-            moviesdata()
-        }, 1000);
+        moviesdata()
     }, [])
 
     const handleSearch = (e) => {
@@ -49,6 +50,11 @@ function Home() {
         const results = allmovies.filter(movie => movie.title.toLowerCase().includes(value.toLowerCase()))
         setSearchResults(results)
     }
+    useEffect(() => {
+        setTimeout(() => {
+            setLoadSkeleton(false);
+        }, 2000);
+    }, []);
 
     return (
         <>
@@ -65,7 +71,8 @@ function Home() {
                                     <>
                                         <MoviesCards key={index} title={title} image={image} />
                                     </>)
-                            })) : (<h3>No results found</h3>)
+                            })) :
+                            (<h3>Results Not Found</h3>)
                         }
                     </div>
                 </div>
@@ -74,7 +81,7 @@ function Home() {
                     <div className="new-release-container">
                         <h3 className="heading">Trending Movies</h3>
                         <div className="home-card-container">
-                            {
+                            {!loadSkeleton ?
                                 allmovies.slice(0, 5).map((movie, index) => {
                                     const { title, image, } = movie
                                     return (
@@ -82,14 +89,17 @@ function Home() {
                                             <MoviesCards key={index} title={title} image={image} />
                                         </>
                                     )
-                                })
+                                }) :
+                                <Skeleton />
                             }
                         </div>
                     </div>
                     <div className="new-release-container">
                         <h3 className="heading">Popular Movies</h3>
                         <div className="home-card-container">
-                            {
+                            {loadSkeleton ?
+                                <Skeleton />
+                                :
                                 allmovies.slice(5, 10).map((movie, index) => {
                                     const { title, image, } = movie
                                     return (
@@ -103,7 +113,7 @@ function Home() {
                     </div>
                 </>
             )}
-            <Footer/>
+            <Footer />
         </>
     )
 }

@@ -1,0 +1,59 @@
+.movie-card-placeholder {
+    width: 232px;
+    height: 400px;
+    border-radius: 10px;
+    border: 3px solid;
+    background-color: #282828;
+    border-image: linear-gradient(0.25turn, #3c3c3c, #e3e3e3, #4a4a4a) 1;
+}
+.img-placeholder {
+    height: 330px;
+    width: 100%;
+    background-color: #555;
+
+}
+
+.img-placeholder img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.movie-title-placeholder {
+    width: 80%;
+    height: 15px;
+    border-radius: 0 5px 5px 0px;
+    background-color: #5a5a5a;
+    margin: auto;
+    margin-top: 10px;
+
+}
+.movie-title-placeholder-second {
+    width: 60%;
+    height: 15px;
+    border-radius: 0 5px 5px 0px;
+    background-color: #5a5a5a;
+    margin-top: 5px;
+    margin-left: 23.5px;
+
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.movie-title-placeholder,
+.img-placeholder ,
+.movie-title-placeholder-second {
+    animation: pulse 2s infinite;
+}
